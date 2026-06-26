@@ -197,6 +197,21 @@
   .chip.zero { border-color: var(--gold); }
   .chip.tech { font-size: 14.5px; font-weight: 600; }
 
+  /* value cards (real cards + point worth) */
+  .value-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px 22px; margin-top: 8px; }
+  .vc { display: flex; flex-direction: column; align-items: center; gap: 13px; }
+  .value-cards .pc { width: 74px; height: 106px; }
+  .value-cards .pc .corner { font-size: 13px; }
+  .value-cards .pc .corner .r { font-size: 15px; }
+  .value-cards .pc .pip { font-size: 36px; }
+  .value-cards .pc.klaim::after { top: -11px; bottom: auto; }
+  .vc .val {
+    font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--ink);
+    background: var(--felt-700); border: 1px solid var(--line); border-radius: 999px; padding: 4px 15px;
+  }
+  .vc .val.gold { color: #2a2008; background: var(--gold); border-color: var(--gold); }
+  .value-caption { text-align: center; color: var(--muted); font-size: 15px; max-width: 520px; margin: 30px auto 0; }
+
   /* klaim outcomes */
   .klaim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 760px; margin: 0 auto; }
   .out { border-radius: 18px; padding: 26px; border: 1px solid; display: flex; flex-direction: column; gap: 8px; }
@@ -329,14 +344,33 @@
     <div class="sec-head reveal" style="margin: 54px auto 22px;">
       <span class="kicker" data-i18n="values_kicker">Valoarea cărților</span>
     </div>
-    <div class="values reveal">
-      <div class="chip">As = <b>1</b></div>
-      <div class="chip" data-i18n="val_ten">2–10 = <b>valoarea lor</b></div>
-      <div class="chip">J = <b>11</b></div>
-      <div class="chip">Q = <b>12</b></div>
-      <div class="chip">K = <b>13</b></div>
-      <div class="chip zero" data-i18n="val_klaim">carte KLAIM = <b>0</b></div>
+    <div class="value-cards reveal">
+      <div class="vc">
+        <div class="pc"><span class="corner tl"><span class="r">A</span>♠</span><span class="pip">♠</span><span class="corner br"><span class="r">A</span>♠</span></div>
+        <span class="val">= 1</span>
+      </div>
+      <div class="vc">
+        <div class="pc red"><span class="corner tl"><span class="r">5</span>♥</span><span class="pip">♥</span><span class="corner br"><span class="r">5</span>♥</span></div>
+        <span class="val">= 5</span>
+      </div>
+      <div class="vc">
+        <div class="pc"><span class="corner tl"><span class="r">J</span>♣</span><span class="pip">♣</span><span class="corner br"><span class="r">J</span>♣</span></div>
+        <span class="val">= 11</span>
+      </div>
+      <div class="vc">
+        <div class="pc red"><span class="corner tl"><span class="r">Q</span>♦</span><span class="pip">♦</span><span class="corner br"><span class="r">Q</span>♦</span></div>
+        <span class="val">= 12</span>
+      </div>
+      <div class="vc">
+        <div class="pc"><span class="corner tl"><span class="r">K</span>♠</span><span class="pip">♠</span><span class="corner br"><span class="r">K</span>♠</span></div>
+        <span class="val">= 13</span>
+      </div>
+      <div class="vc">
+        <div class="pc klaim red"><span class="corner tl"><span class="r">8</span>♦</span><span class="pip">♦</span><span class="corner br"><span class="r">8</span>♦</span></div>
+        <span class="val gold">= 0</span>
+      </div>
     </div>
+    <p class="value-caption reveal" data-i18n="values_caption">Cărțile 2–10 valorează exact cât numărul lor. Cartea KLAIM valorează 0 puncte.</p>
   </div>
 </section>
 
@@ -484,7 +518,7 @@
       step3_title: `Strigă KLAIM`,
       step3_body: `Când crezi că ai cea mai mică mână de la masă, <strong>strigi KLAIM</strong> la începutul turei tale. Ai dreptate? Zero puncte. Ai greșit? Penalizare.`,
       values_kicker: `Valoarea cărților`,
-      val_ten: `2–10 = <b>valoarea lor</b>`, val_klaim: `carte KLAIM = <b>0</b>`,
+      values_caption: `Cărțile 2–10 valorează exact cât numărul lor. Cartea KLAIM valorează 0 puncte.`,
       klaim_kicker: `Momentul cheie`, klaim_title: `Strigătul „KLAIM!”`,
       klaim_sub: `Poți striga doar la începutul turei tale, după ce toți au jucat o tură, și doar dacă ai <strong style="color:var(--ink)">10 puncte sau mai puține</strong>.`,
       good_title: `Ai dreptate`,
@@ -536,7 +570,7 @@
       step3_title: `Call KLAIM`,
       step3_body: `When you think you hold the lowest hand at the table, <strong>call KLAIM</strong> at the start of your turn. Right? Zero points. Wrong? A penalty.`,
       values_kicker: `Card values`,
-      val_ten: `2–10 = <b>their value</b>`, val_klaim: `KLAIM card = <b>0</b>`,
+      values_caption: `Number cards 2–10 are worth their face value. The KLAIM card scores 0 points.`,
       klaim_kicker: `The key moment`, klaim_title: `Calling “KLAIM!”`,
       klaim_sub: `You can only call at the start of your turn, after everyone has played one turn, and only if you have <strong style="color:var(--ink)">10 points or fewer</strong>.`,
       good_title: `You're right`,
@@ -591,8 +625,7 @@
 
   let saved = null;
   try { saved = localStorage.getItem('klaim_lang'); } catch (e) {}
-  const browserEn = (navigator.language || '').toLowerCase().startsWith('en');
-  applyLang(saved || (browserEn ? 'en' : 'ro'));
+  applyLang(saved === 'en' ? 'en' : 'ro');
   document.querySelectorAll('.lang-switch button').forEach((b) =>
     b.addEventListener('click', () => applyLang(b.dataset.lang))
   );
