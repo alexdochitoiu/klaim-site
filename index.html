@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KLAIM — Jocul de cărți rapid</title>
+<meta name="description" content="KLAIM este un joc de cărți rapid pentru 2–6 jucători. Rămâi cu cât mai puține puncte în mână și strigă „KLAIM!” la momentul potrivit." />
+<meta name="theme-color" content="#0E2C24" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="KLAIM — Jocul de cărți rapid" />
+<meta property="og:description" content="Aruncă, trage, iar când ești cel mai jos — strigă KLAIM! Un joc de cărți rapid pentru 2–6 jucători." />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Crect width='1024' height='1024' rx='200' fill='%230E2C24'/%3E%3Ctext x='512' y='560' font-family='Georgia,serif' font-weight='700' font-size='780' fill='%23F2D27B' text-anchor='middle' dominant-baseline='central'%3EK%3C/text%3E%3C/svg%3E" />
+
+<style>
+  :root {
+    --felt-900: #0a211b;
+    --felt-800: #0E2C24;
+    --felt-700: #134034;
+    --felt-600: #1a5343;
+    --gold: #F2D27B;
+    --gold-deep: #B89844;
+    --ink: #EAF2EC;
+    --muted: #9DB3A8;
+    --line: rgba(184,152,68,0.28);
+    --card: #FBF8EF;
+    --suit-red: #C0392B;
+    --suit-black: #1A1A1A;
+    --good: #4FB477;
+    --bad: #E06C6C;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--felt-800);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10,33,27,0.82);
+    backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .brand {
+    font-family: var(--serif); font-weight: 700; font-size: 24px;
+    color: var(--gold); letter-spacing: 3px;
+  }
+  .brand .dot { color: var(--gold-deep); }
+  .nav-links { display: flex; gap: 26px; }
+  .nav-links a { color: var(--muted); font-size: 14.5px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--gold); }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  /* ---------- HERO ---------- */
+  header.hero {
+    position: relative;
+    background:
+      radial-gradient(1200px 520px at 50% -10%, var(--felt-600) 0%, transparent 60%),
+      linear-gradient(180deg, var(--felt-800) 0%, var(--felt-900) 100%);
+    padding: 86px 0 96px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero .ghostK {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -46%);
+    font-family: var(--serif); font-weight: 700;
+    font-size: 60vw; line-height: 1; color: var(--gold);
+    opacity: 0.035; pointer-events: none; user-select: none;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .eyebrow {
+    display: inline-block;
+    color: var(--gold-deep); font-weight: 600;
+    letter-spacing: 4px; font-size: 12.5px; text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1.title {
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(58px, 14vw, 132px); letter-spacing: clamp(6px, 2vw, 18px);
+    color: var(--gold);
+    text-shadow: 0 4px 40px rgba(242,210,123,0.18);
+    line-height: 0.95;
+  }
+  .tagline {
+    font-family: var(--serif);
+    color: var(--ink); font-size: clamp(17px, 3vw, 23px);
+    letter-spacing: 5px; text-transform: uppercase;
+    margin-top: 10px; opacity: 0.9;
+  }
+  .subpitch {
+    color: var(--muted); font-size: clamp(15px, 2.4vw, 18px);
+    max-width: 540px; margin: 24px auto 0;
+  }
+  .cta-row { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 999px;
+    font-weight: 600; font-size: 15px; cursor: pointer; transition: transform .15s, box-shadow .2s;
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: #2a2008;
+    box-shadow: 0 8px 26px rgba(242,210,123,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(242,210,123,0.36); }
+  .btn-ghost { border: 1.5px solid var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* fanned cards under hero */
+  .fan { margin-top: 56px; height: 184px; position: relative; }
+  .fan .pc {
+    position: absolute; left: 50%; bottom: 0;
+    transform-origin: bottom center;
+  }
+  .fan .pc:nth-child(1) { transform: translateX(-50%) rotate(-22deg) translateY(8px); }
+  .fan .pc:nth-child(2) { transform: translateX(-50%) rotate(-11deg) translateY(-6px); }
+  .fan .pc:nth-child(3) { transform: translateX(-50%) rotate(0deg) translateY(-14px); z-index: 3; }
+  .fan .pc:nth-child(4) { transform: translateX(-50%) rotate(11deg) translateY(-6px); }
+  .fan .pc:nth-child(5) { transform: translateX(-50%) rotate(22deg) translateY(8px); }
+
+  /* ---------- PLAYING CARD ---------- */
+  .pc {
+    width: 92px; height: 132px; border-radius: 11px;
+    background: var(--card); color: var(--suit-black);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    border: 1px solid rgba(0,0,0,0.08);
+    position: relative; font-family: var(--serif); font-weight: 700;
+    flex: 0 0 auto;
+  }
+  .pc .corner { position: absolute; font-size: 17px; line-height: 1; text-align: center; }
+  .pc .corner .r { display: block; font-size: 19px; }
+  .pc .tl { top: 9px; left: 9px; }
+  .pc .br { bottom: 9px; right: 9px; transform: rotate(180deg); }
+  .pc .pip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 46px; }
+  .pc.red { color: var(--suit-red); }
+  .pc.klaim {
+    box-shadow: 0 0 0 2.5px var(--gold), 0 10px 30px rgba(242,210,123,0.4);
+  }
+  .pc.klaim::after {
+    content: "KLAIM"; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #2a2008; font-family: var(--sans); font-weight: 700;
+    font-size: 9px; letter-spacing: 1px; padding: 2px 8px; border-radius: 999px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 78px 0; }
+  section.alt { background: var(--felt-900); }
+  .sec-head { text-align: center; max-width: 620px; margin: 0 auto 50px; }
+  .kicker { color: var(--gold-deep); font-weight: 700; letter-spacing: 3px; font-size: 12.5px; text-transform: uppercase; }
+  h2 { font-family: var(--serif); font-size: clamp(28px, 5vw, 40px); color: var(--ink); margin-top: 8px; }
+  .sec-head p { color: var(--muted); margin-top: 12px; font-size: 16.5px; }
+
+  /* facts strip */
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .fact {
+    background: var(--felt-700); border: 1px solid var(--line); border-radius: 16px;
+    padding: 26px 18px; text-align: center;
+  }
+  .fact .big { font-family: var(--serif); font-size: 40px; color: var(--gold); font-weight: 700; }
+  .fact .lbl { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  @media (max-width: 560px) { .facts { grid-template-columns: 1fr; } }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .step {
+    background: var(--felt-700); border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px 24px; position: relative;
+  }
+  .step .num {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: #2a2008; font-family: var(--serif); font-weight: 700; font-size: 20px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+  }
+  .step h3 { font-size: 19px; color: var(--gold); margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: 15px; }
+  .step p strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+
+  /* values */
+  .values {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px;
+  }
+  .chip {
+    background: var(--felt-700); border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px 18px; font-size: 15px; color: var(--ink);
+  }
+  .chip b { color: var(--gold); font-family: var(--serif); font-size: 18px; }
+  .chip.zero { border-color: var(--gold); }
+  .chip.zero b { color: var(--gold); }
+
+  /* klaim outcomes */
+  .klaim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 760px; margin: 0 auto; }
+  .out {
+    border-radius: 18px; padding: 26px; border: 1px solid;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .out.good { background: rgba(79,180,119,0.10); border-color: rgba(79,180,119,0.45); }
+  .out.bad { background: rgba(224,108,108,0.10); border-color: rgba(224,108,108,0.45); }
+  .out .ico { font-size: 30px; }
+  .out h3 { font-size: 20px; }
+  .out.good h3 { color: var(--good); }
+  .out.bad h3 { color: var(--bad); }
+  .out p { color: var(--muted); font-size: 15px; }
+  .out p strong { color: var(--ink); }
+  @media (max-width: 600px) { .klaim-grid { grid-template-columns: 1fr; } }
+
+  /* modes */
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .mode {
+    background: var(--felt-700); border: 1px solid var(--line); border-radius: 16px;
+    padding: 24px; transition: transform .15s, border-color .2s;
+  }
+  .mode:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .mode .em { font-size: 28px; }
+  .mode h3 { font-size: 17px; color: var(--gold); margin: 10px 0 6px; }
+  .mode p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 760px) { .modes { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .modes { grid-template-columns: 1fr; } }
+
+  /* win banner */
+  .win {
+    text-align: center; max-width: 720px; margin: 0 auto;
+    background: linear-gradient(180deg, var(--felt-700), var(--felt-900));
+    border: 1px solid var(--line); border-radius: 22px; padding: 44px 30px;
+  }
+  .win h2 { margin-bottom: 10px; }
+  .win p { color: var(--muted); font-size: 17px; }
+  .win .em { font-size: 44px; }
+
+  /* footer */
+  footer { background: var(--felt-900); border-top: 1px solid var(--line); padding: 46px 0 40px; }
+  .foot-grid { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .foot-brand { font-family: var(--serif); color: var(--gold); font-size: 22px; letter-spacing: 3px; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .foot-links a { color: var(--muted); font-size: 14px; transition: color .2s; }
+  .foot-links a:hover { color: var(--gold); }
+  .copy { color: var(--muted); font-size: 13px; margin-top: 22px; opacity: 0.75; }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">KLAIM<span class="dot">.</span></div>
+    <div class="nav-links">
+      <a href="#cum-se-joaca">Cum se joacă</a>
+      <a href="#klaim">KLAIM!</a>
+      <a href="#moduri">Moduri</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="ghostK">K</div>
+  <div class="wrap hero-content">
+    <span class="eyebrow">The fast card game</span>
+    <h1 class="title">KLAIM</h1>
+    <div class="tagline">Jocul de cărți rapid</div>
+    <p class="subpitch">Rămâi cu cât mai puține puncte în mână și strigă „KLAIM!” la momentul potrivit. 2–6 jucători, runde scurte, decizii rapide.</p>
+    <div class="cta-row">
+      <a href="#cum-se-joaca" class="btn btn-primary">Vezi cum se joacă</a>
+      <a href="#moduri" class="btn btn-ghost">Moduri de joc</a>
+    </div>
+
+    <div class="fan">
+      <div class="pc red"><span class="corner tl"><span class="r">7</span>♥</span><span class="pip">♥</span><span class="corner br"><span class="r">7</span>♥</span></div>
+      <div class="pc"><span class="corner tl"><span class="r">K</span>♠</span><span class="pip">♠</span><span class="corner br"><span class="r">K</span>♠</span></div>
+      <div class="pc klaim red"><span class="corner tl"><span class="r">A</span>♦</span><span class="pip">♦</span><span class="corner br"><span class="r">A</span>♦</span></div>
+      <div class="pc"><span class="corner tl"><span class="r">4</span>♣</span><span class="pip">♣</span><span class="corner br"><span class="r">4</span>♣</span></div>
+      <div class="pc red"><span class="corner tl"><span class="r">2</span>♥</span><span class="pip">♥</span><span class="corner br"><span class="r">2</span>♥</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- FACTS -->
+<section>
+  <div class="wrap">
+    <div class="facts reveal">
+      <div class="fact"><div class="big">2–6</div><div class="lbl">jucători</div></div>
+      <div class="fact"><div class="big">52</div><div class="lbl">cărți (pachet standard)</div></div>
+      <div class="fact"><div class="big">~5 min</div><div class="lbl">pe rundă</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO PLAY -->
+<section id="cum-se-joaca" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Regulile pe scurt</span>
+      <h2>Cum se joacă</h2>
+      <p>Trei pași simpli. Înveți într-o rundă.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="num">1</div>
+        <h3>Împărțirea</h3>
+        <p>Fiecare primește <strong>4 sau 5 cărți</strong> (5 dacă sunteți 2–3, 4 dacă sunteți 4–6). Se întorc apoi <strong>cartea KLAIM</strong> (valoarea ei = 0 puncte runda asta) și <strong>cartea de START</strong>.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">2</div>
+        <h3>Tura ta</h3>
+        <p>Mereu două acțiuni, în ordine: <strong>arunci</strong> o carte (sau 2–4 de aceeași valoare) și apoi <strong>tragi</strong> una nouă — de pe pachet sau din grămada de aruncări.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">3</div>
+        <h3>Strigă KLAIM</h3>
+        <p>Când crezi că ai cea mai mică mână de la masă, <strong>strigi KLAIM</strong> la începutul turei tale. Ai dreptate? Zero puncte. Ai greșit? Penalizare.</p>
+      </div>
+    </div>
+
+    <div class="sec-head reveal" style="margin: 54px auto 22px;">
+      <span class="kicker">Valoarea cărților</span>
+    </div>
+    <div class="values reveal">
+      <div class="chip">As = <b>1</b></div>
+      <div class="chip">2–10 = <b>valoarea lor</b></div>
+      <div class="chip">J = <b>11</b></div>
+      <div class="chip">Q = <b>12</b></div>
+      <div class="chip">K = <b>13</b></div>
+      <div class="chip zero">carte KLAIM = <b>0</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- KLAIM MECHANIC -->
+<section id="klaim">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Momentul cheie</span>
+      <h2>Strigătul „KLAIM!”</h2>
+      <p>Poți striga doar la începutul turei tale, după ce toți au jucat o tură, și doar dacă ai <strong style="color:var(--ink)">10 puncte sau mai puține</strong>.</p>
+    </div>
+    <div class="klaim-grid">
+      <div class="out good reveal">
+        <span class="ico">✓</span>
+        <h3>Ai dreptate</h3>
+        <p>Ai cea mai mică mână de la masă → primești <strong>0 puncte</strong> în runda asta. 🎉</p>
+      </div>
+      <div class="out bad reveal">
+        <span class="ico">✗</span>
+        <h3>Te-ai înșelat</h3>
+        <p>Altcineva avea mai puțin → primești o penalizare de <strong>+50 de puncte</strong>. 😬</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section id="moduri" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Variază jocul</span>
+      <h2>Moduri de joc</h2>
+      <p>Pe lângă modul Clasic, alege un ritm sau o regulă diferită.</p>
+    </div>
+    <div class="modes">
+      <div class="mode reveal"><div class="em">♠️</div><h3>Clasic</h3><p>Regulile complete, până la 100 de puncte. Ultimul rămas câștigă.</p></div>
+      <div class="mode reveal"><div class="em">⚡</div><h3>Rundă rapidă</h3><p>Joc scurt, decis într-o singură rundă.</p></div>
+      <div class="mode reveal"><div class="em">⚔️</div><h3>Duel 1v1</h3><p>Doar voi doi, față în față, cu 10 cărți.</p></div>
+      <div class="mode reveal"><div class="em">🏃</div><h3>Speed</h3><p>Mâini mici, ture rapide — adrenalină pură.</p></div>
+      <div class="mode reveal"><div class="em">✨</div><h3>Dublu KLAIM</h3><p>Două cărți speciale valorează 0 — mai multe șanse.</p></div>
+      <div class="mode reveal"><div class="em">🃏</div><h3>Jokeri</h3><p>Jokerii îți împart punctele din mână — strategie nouă.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WIN -->
+<section>
+  <div class="wrap">
+    <div class="win reveal">
+      <div class="em">🏆</div>
+      <h2>Cum se câștigă</h2>
+      <p>Punctele se adună rundă după rundă. Cine ajunge la <strong style="color:var(--ink)">100 de puncte e eliminat</strong>. Ultimul jucător rămas în joc câștigă partida.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">KLAIM</div>
+      <div class="foot-links">
+        <a href="https://alexdochitoiu.github.io/klaim-legal/privacy-policy.html">Politica de confidențialitate</a>
+        <a href="https://alexdochitoiu.github.io/klaim-legal/data-deletion.html">Ștergerea datelor</a>
+      </div>
+    </div>
+    <p class="copy">© 2026 Dokee Studio · Joacă singur împotriva boților sau online cu prietenii. Aruncă, trage, iar când ești cel mai jos — strigă KLAIM!</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
