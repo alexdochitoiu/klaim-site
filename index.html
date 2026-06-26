@@ -59,10 +59,20 @@
     color: var(--gold); letter-spacing: 3px;
   }
   .brand .dot { color: var(--gold-deep); }
+  .nav-right { display: flex; align-items: center; gap: 26px; }
   .nav-links { display: flex; gap: 26px; }
   .nav-links a { color: var(--muted); font-size: 14.5px; font-weight: 500; transition: color .2s; }
   .nav-links a:hover { color: var(--gold); }
-  @media (max-width: 620px) { .nav-links { display: none; } }
+  @media (max-width: 680px) { .nav-links { display: none; } }
+
+  .lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .lang-switch button {
+    background: transparent; border: none; color: var(--muted);
+    font-family: var(--sans); font-size: 12.5px; font-weight: 700; letter-spacing: 1px;
+    padding: 6px 13px; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .lang-switch button.active { background: var(--gold); color: #2a2008; }
+  .lang-switch button:not(.active):hover { color: var(--gold); }
 
   /* ---------- HERO ---------- */
   header.hero {
@@ -103,13 +113,13 @@
   }
   .subpitch {
     color: var(--muted); font-size: clamp(15px, 2.4vw, 18px);
-    max-width: 540px; margin: 24px auto 0;
+    max-width: 560px; margin: 24px auto 0;
   }
   .cta-row { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 13px 26px; border-radius: 999px;
-    font-weight: 600; font-size: 15px; cursor: pointer; transition: transform .15s, box-shadow .2s;
+    font-weight: 600; font-size: 15px; cursor: pointer; transition: transform .15s, box-shadow .2s, border-color .2s, color .2s;
   }
   .btn-primary {
     background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
@@ -122,10 +132,7 @@
 
   /* fanned cards under hero */
   .fan { margin-top: 56px; height: 184px; position: relative; }
-  .fan .pc {
-    position: absolute; left: 50%; bottom: 0;
-    transform-origin: bottom center;
-  }
+  .fan .pc { position: absolute; left: 50%; bottom: 0; transform-origin: bottom center; }
   .fan .pc:nth-child(1) { transform: translateX(-50%) rotate(-22deg) translateY(8px); }
   .fan .pc:nth-child(2) { transform: translateX(-50%) rotate(-11deg) translateY(-6px); }
   .fan .pc:nth-child(3) { transform: translateX(-50%) rotate(0deg) translateY(-14px); z-index: 3; }
@@ -147,9 +154,7 @@
   .pc .br { bottom: 9px; right: 9px; transform: rotate(180deg); }
   .pc .pip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 46px; }
   .pc.red { color: var(--suit-red); }
-  .pc.klaim {
-    box-shadow: 0 0 0 2.5px var(--gold), 0 10px 30px rgba(242,210,123,0.4);
-  }
+  .pc.klaim { box-shadow: 0 0 0 2.5px var(--gold), 0 10px 30px rgba(242,210,123,0.4); }
   .pc.klaim::after {
     content: "KLAIM"; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
     background: var(--gold); color: #2a2008; font-family: var(--sans); font-weight: 700;
@@ -159,27 +164,21 @@
   /* ---------- SECTIONS ---------- */
   section { padding: 78px 0; }
   section.alt { background: var(--felt-900); }
-  .sec-head { text-align: center; max-width: 620px; margin: 0 auto 50px; }
+  .sec-head { text-align: center; max-width: 640px; margin: 0 auto 50px; }
   .kicker { color: var(--gold-deep); font-weight: 700; letter-spacing: 3px; font-size: 12.5px; text-transform: uppercase; }
   h2 { font-family: var(--serif); font-size: clamp(28px, 5vw, 40px); color: var(--ink); margin-top: 8px; }
   .sec-head p { color: var(--muted); margin-top: 12px; font-size: 16.5px; }
 
   /* facts strip */
   .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .fact {
-    background: var(--felt-700); border: 1px solid var(--line); border-radius: 16px;
-    padding: 26px 18px; text-align: center;
-  }
+  .fact { background: var(--felt-700); border: 1px solid var(--line); border-radius: 16px; padding: 26px 18px; text-align: center; }
   .fact .big { font-family: var(--serif); font-size: 40px; color: var(--gold); font-weight: 700; }
   .fact .lbl { color: var(--muted); font-size: 14px; margin-top: 4px; }
   @media (max-width: 560px) { .facts { grid-template-columns: 1fr; } }
 
   /* steps */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  .step {
-    background: var(--felt-700); border: 1px solid var(--line); border-radius: 18px;
-    padding: 28px 24px; position: relative;
-  }
+  .step { background: var(--felt-700); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; position: relative; }
   .step .num {
     width: 40px; height: 40px; border-radius: 50%;
     background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
@@ -191,24 +190,16 @@
   .step p strong { color: var(--ink); font-weight: 600; }
   @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
 
-  /* values */
-  .values {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px;
-  }
-  .chip {
-    background: var(--felt-700); border: 1px solid var(--line);
-    border-radius: 12px; padding: 12px 18px; font-size: 15px; color: var(--ink);
-  }
+  /* values / chips */
+  .values { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px; }
+  .chip { background: var(--felt-700); border: 1px solid var(--line); border-radius: 12px; padding: 12px 18px; font-size: 15px; color: var(--ink); }
   .chip b { color: var(--gold); font-family: var(--serif); font-size: 18px; }
   .chip.zero { border-color: var(--gold); }
-  .chip.zero b { color: var(--gold); }
+  .chip.tech { font-size: 14.5px; font-weight: 600; }
 
   /* klaim outcomes */
   .klaim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 760px; margin: 0 auto; }
-  .out {
-    border-radius: 18px; padding: 26px; border: 1px solid;
-    display: flex; flex-direction: column; gap: 8px;
-  }
+  .out { border-radius: 18px; padding: 26px; border: 1px solid; display: flex; flex-direction: column; gap: 8px; }
   .out.good { background: rgba(79,180,119,0.10); border-color: rgba(79,180,119,0.45); }
   .out.bad { background: rgba(224,108,108,0.10); border-color: rgba(224,108,108,0.45); }
   .out .ico { font-size: 30px; }
@@ -219,28 +210,26 @@
   .out p strong { color: var(--ink); }
   @media (max-width: 600px) { .klaim-grid { grid-template-columns: 1fr; } }
 
-  /* modes */
-  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .mode {
-    background: var(--felt-700); border: 1px solid var(--line); border-radius: 16px;
-    padding: 24px; transition: transform .15s, border-color .2s;
-  }
-  .mode:hover { transform: translateY(-3px); border-color: var(--gold); }
-  .mode .em { font-size: 28px; }
-  .mode h3 { font-size: 17px; color: var(--gold); margin: 10px 0 6px; }
-  .mode p { color: var(--muted); font-size: 14px; }
-  @media (max-width: 760px) { .modes { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 480px) { .modes { grid-template-columns: 1fr; } }
+  /* tiles (modes + features + tech-how) */
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .tile { background: var(--felt-700); border: 1px solid var(--line); border-radius: 16px; padding: 24px; transition: transform .15s, border-color .2s; }
+  .tile:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .tile .em { font-size: 28px; }
+  .tile h3 { font-size: 17px; color: var(--gold); margin: 10px 0 6px; }
+  .tile p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 760px) { .tiles { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .tiles { grid-template-columns: 1fr; } }
 
   /* win banner */
-  .win {
-    text-align: center; max-width: 720px; margin: 0 auto;
-    background: linear-gradient(180deg, var(--felt-700), var(--felt-900));
-    border: 1px solid var(--line); border-radius: 22px; padding: 44px 30px;
-  }
+  .win { text-align: center; max-width: 720px; margin: 0 auto; background: linear-gradient(180deg, var(--felt-700), var(--felt-900)); border: 1px solid var(--line); border-radius: 22px; padding: 44px 30px; }
   .win h2 { margin-bottom: 10px; }
   .win p { color: var(--muted); font-size: 17px; }
   .win .em { font-size: 44px; }
+
+  /* tech docs row */
+  .tech-docs { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 50px; }
+  .tech-docs .docs-label { color: var(--muted); font-size: 14px; }
+  .tech-docs .btn { padding: 10px 20px; font-size: 14px; }
 
   /* footer */
   footer { background: var(--felt-900); border-top: 1px solid var(--line); padding: 46px 0 40px; }
@@ -261,11 +250,18 @@
 
 <nav>
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="KLAIM — înapoi sus">KLAIM<span class="dot">.</span></a>
-    <div class="nav-links">
-      <a href="#cum-se-joaca">Cum se joacă</a>
-      <a href="#klaim">KLAIM!</a>
-      <a href="#moduri">Moduri</a>
+    <a class="brand" href="#top" aria-label="KLAIM">KLAIM<span class="dot">.</span></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#cum-se-joaca" data-i18n="nav_how">Cum se joacă</a>
+        <a href="#moduri" data-i18n="nav_modes">Moduri</a>
+        <a href="#functii" data-i18n="nav_features">Funcții</a>
+        <a href="#tehnic" data-i18n="nav_tech">Tehnic</a>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ro">RO</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
     </div>
   </div>
 </nav>
@@ -273,13 +269,13 @@
 <header class="hero" id="top">
   <div class="ghostK">K</div>
   <div class="wrap hero-content">
-    <span class="eyebrow">The fast card game</span>
+    <span class="eyebrow" data-i18n="hero_eyebrow">Joc de cărți · 2–6 jucători</span>
     <h1 class="title">KLAIM</h1>
-    <div class="tagline">Jocul de cărți rapid</div>
-    <p class="subpitch">Rămâi cu cât mai puține puncte în mână și strigă „KLAIM!” la momentul potrivit. 2–6 jucători, runde scurte, decizii rapide.</p>
+    <div class="tagline" data-i18n="hero_tagline">Jocul de cărți rapid</div>
+    <p class="subpitch" data-i18n="hero_sub">Rămâi cu cât mai puține puncte în mână și strigă „KLAIM!” la momentul potrivit. Runde scurte, decizii rapide.</p>
     <div class="cta-row">
-      <a href="#cum-se-joaca" class="btn btn-primary">Vezi cum se joacă</a>
-      <a href="#moduri" class="btn btn-ghost">Moduri de joc</a>
+      <a href="#cum-se-joaca" class="btn btn-primary" data-i18n="hero_cta1">Vezi cum se joacă</a>
+      <a href="#moduri" class="btn btn-ghost" data-i18n="hero_cta2">Moduri de joc</a>
     </div>
 
     <div class="fan">
@@ -296,9 +292,9 @@
 <section>
   <div class="wrap">
     <div class="facts reveal">
-      <div class="fact"><div class="big">2–6</div><div class="lbl">jucători</div></div>
-      <div class="fact"><div class="big">52</div><div class="lbl">cărți (pachet standard)</div></div>
-      <div class="fact"><div class="big">~5 min</div><div class="lbl">pe rundă</div></div>
+      <div class="fact"><div class="big">2–6</div><div class="lbl" data-i18n="facts_players">jucători</div></div>
+      <div class="fact"><div class="big">52</div><div class="lbl" data-i18n="facts_cards">cărți (pachet standard)</div></div>
+      <div class="fact"><div class="big">~5 min</div><div class="lbl" data-i18n="facts_round">pe rundă</div></div>
     </div>
   </div>
 </section>
@@ -307,39 +303,39 @@
 <section id="cum-se-joaca" class="alt">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="kicker">Regulile pe scurt</span>
-      <h2>Cum se joacă</h2>
-      <p>Trei pași simpli. Înveți într-o rundă.</p>
+      <span class="kicker" data-i18n="how_kicker">Regulile pe scurt</span>
+      <h2 data-i18n="how_title">Cum se joacă</h2>
+      <p data-i18n="how_sub">Trei pași simpli. Înveți într-o rundă.</p>
     </div>
 
     <div class="steps">
       <div class="step reveal">
         <div class="num">1</div>
-        <h3>Împărțirea</h3>
-        <p>Fiecare primește <strong>4 sau 5 cărți</strong> (5 dacă sunteți 2–3, 4 dacă sunteți 4–6). Se întorc apoi <strong>cartea KLAIM</strong> (valoarea ei = 0 puncte runda asta) și <strong>cartea de START</strong>.</p>
+        <h3 data-i18n="step1_title">Împărțirea</h3>
+        <p data-i18n="step1_body">Fiecare primește <strong>4 sau 5 cărți</strong> (5 dacă sunteți 2–3, 4 dacă sunteți 4–6). Se întorc apoi <strong>cartea KLAIM</strong> (valoarea ei = 0 puncte runda asta) și <strong>cartea de START</strong>.</p>
       </div>
       <div class="step reveal">
         <div class="num">2</div>
-        <h3>Tura ta</h3>
-        <p>Mereu două acțiuni, în ordine: <strong>arunci</strong> o carte (sau 2–4 de aceeași valoare) și apoi <strong>tragi</strong> una nouă — de pe pachet sau din grămada de aruncări.</p>
+        <h3 data-i18n="step2_title">Tura ta</h3>
+        <p data-i18n="step2_body">Mereu două acțiuni, în ordine: <strong>arunci</strong> o carte (sau 2–4 de aceeași valoare) și apoi <strong>tragi</strong> una nouă — de pe pachet sau din grămada de aruncări.</p>
       </div>
       <div class="step reveal">
         <div class="num">3</div>
-        <h3>Strigă KLAIM</h3>
-        <p>Când crezi că ai cea mai mică mână de la masă, <strong>strigi KLAIM</strong> la începutul turei tale. Ai dreptate? Zero puncte. Ai greșit? Penalizare.</p>
+        <h3 data-i18n="step3_title">Strigă KLAIM</h3>
+        <p data-i18n="step3_body">Când crezi că ai cea mai mică mână de la masă, <strong>strigi KLAIM</strong> la începutul turei tale. Ai dreptate? Zero puncte. Ai greșit? Penalizare.</p>
       </div>
     </div>
 
     <div class="sec-head reveal" style="margin: 54px auto 22px;">
-      <span class="kicker">Valoarea cărților</span>
+      <span class="kicker" data-i18n="values_kicker">Valoarea cărților</span>
     </div>
     <div class="values reveal">
       <div class="chip">As = <b>1</b></div>
-      <div class="chip">2–10 = <b>valoarea lor</b></div>
+      <div class="chip" data-i18n="val_ten">2–10 = <b>valoarea lor</b></div>
       <div class="chip">J = <b>11</b></div>
       <div class="chip">Q = <b>12</b></div>
       <div class="chip">K = <b>13</b></div>
-      <div class="chip zero">carte KLAIM = <b>0</b></div>
+      <div class="chip zero" data-i18n="val_klaim">carte KLAIM = <b>0</b></div>
     </div>
   </div>
 </section>
@@ -348,51 +344,109 @@
 <section id="klaim">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="kicker">Momentul cheie</span>
-      <h2>Strigătul „KLAIM!”</h2>
-      <p>Poți striga doar la începutul turei tale, după ce toți au jucat o tură, și doar dacă ai <strong style="color:var(--ink)">10 puncte sau mai puține</strong>.</p>
+      <span class="kicker" data-i18n="klaim_kicker">Momentul cheie</span>
+      <h2 data-i18n="klaim_title">Strigătul „KLAIM!”</h2>
+      <p data-i18n="klaim_sub">Poți striga doar la începutul turei tale, după ce toți au jucat o tură, și doar dacă ai <strong style="color:var(--ink)">10 puncte sau mai puține</strong>.</p>
     </div>
     <div class="klaim-grid">
       <div class="out good reveal">
         <span class="ico">✓</span>
-        <h3>Ai dreptate</h3>
-        <p>Ai cea mai mică mână de la masă → primești <strong>0 puncte</strong> în runda asta. 🎉</p>
+        <h3 data-i18n="good_title">Ai dreptate</h3>
+        <p data-i18n="good_body">Ai cea mai mică mână de la masă → primești <strong>0 puncte</strong> în runda asta. 🎉</p>
       </div>
       <div class="out bad reveal">
         <span class="ico">✗</span>
-        <h3>Te-ai înșelat</h3>
-        <p>Altcineva avea mai puțin → primești o penalizare de <strong>+50 de puncte</strong>. 😬</p>
+        <h3 data-i18n="bad_title">Te-ai înșelat</h3>
+        <p data-i18n="bad_body">Altcineva avea mai puțin → primești o penalizare de <strong>+50 de puncte</strong>. 😬</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- MODES -->
-<section id="moduri" class="alt">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker">Variază jocul</span>
-      <h2>Moduri de joc</h2>
-      <p>Pe lângă modul Clasic, alege un ritm sau o regulă diferită.</p>
-    </div>
-    <div class="modes">
-      <div class="mode reveal"><div class="em">♠️</div><h3>Clasic</h3><p>Regulile complete, până la 100 de puncte. Ultimul rămas câștigă.</p></div>
-      <div class="mode reveal"><div class="em">⚡</div><h3>Rundă rapidă</h3><p>Joc scurt, decis într-o singură rundă.</p></div>
-      <div class="mode reveal"><div class="em">⚔️</div><h3>Duel 1v1</h3><p>Doar voi doi, față în față, cu 10 cărți.</p></div>
-      <div class="mode reveal"><div class="em">🏃</div><h3>Speed</h3><p>Mâini mici, ture rapide — adrenalină pură.</p></div>
-      <div class="mode reveal"><div class="em">✨</div><h3>Dublu KLAIM</h3><p>Două cărți speciale valorează 0 — mai multe șanse.</p></div>
-      <div class="mode reveal"><div class="em">🃏</div><h3>Jokeri</h3><p>Jokerii îți împart punctele din mână — strategie nouă.</p></div>
     </div>
   </div>
 </section>
 
 <!-- WIN -->
-<section>
+<section class="alt">
   <div class="wrap">
     <div class="win reveal">
       <div class="em">🏆</div>
-      <h2>Cum se câștigă</h2>
-      <p>Punctele se adună rundă după rundă. Cine ajunge la <strong style="color:var(--ink)">100 de puncte e eliminat</strong>. Ultimul jucător rămas în joc câștigă partida.</p>
+      <h2 data-i18n="win_title">Cum se câștigă</h2>
+      <p data-i18n="win_body">Punctele se adună rundă după rundă. Cine ajunge la <strong style="color:var(--ink)">100 de puncte e eliminat</strong>. Ultimul jucător rămas în joc câștigă partida.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section id="moduri">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="modes_kicker">Variază jocul</span>
+      <h2 data-i18n="modes_title">Moduri de joc</h2>
+      <p data-i18n="modes_sub">Pe lângă modul Clasic, alege un ritm sau o regulă diferită.</p>
+    </div>
+    <div class="tiles">
+      <div class="tile reveal"><div class="em">♠️</div><h3 data-i18n="mode_classic_t">Clasic</h3><p data-i18n="mode_classic_b">Regulile complete, până la 100 de puncte. Ultimul rămas câștigă.</p></div>
+      <div class="tile reveal"><div class="em">⚡</div><h3 data-i18n="mode_quick_t">Rundă rapidă</h3><p data-i18n="mode_quick_b">Joc scurt, decis într-o singură rundă.</p></div>
+      <div class="tile reveal"><div class="em">⚔️</div><h3 data-i18n="mode_duel_t">Duel 1v1</h3><p data-i18n="mode_duel_b">Doar voi doi, față în față, cu 10 cărți.</p></div>
+      <div class="tile reveal"><div class="em">🏃</div><h3 data-i18n="mode_speed_t">Speed</h3><p data-i18n="mode_speed_b">Mâini mici, ture rapide — adrenalină pură.</p></div>
+      <div class="tile reveal"><div class="em">✨</div><h3 data-i18n="mode_double_t">Dublu KLAIM</h3><p data-i18n="mode_double_b">Două cărți speciale valorează 0 — mai multe șanse.</p></div>
+      <div class="tile reveal"><div class="em">🃏</div><h3 data-i18n="mode_jokers_t">Jokeri</h3><p data-i18n="mode_jokers_b">Jokerii îți împart punctele din mână — strategie nouă.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="functii" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="feat_kicker">Mai mult decât cărțile</span>
+      <h2 data-i18n="feat_title">Ce găsești în aplicație</h2>
+      <p data-i18n="feat_sub">Joacă singur sau cu prietenii, cu tot ce ține jocul viu.</p>
+    </div>
+    <div class="tiles">
+      <div class="tile reveal"><div class="em">🤖</div><h3 data-i18n="feat_bots_t">Joc cu boți</h3><p data-i18n="feat_bots_b">Joacă oricând, chiar și offline, contra unor boți cu strategie.</p></div>
+      <div class="tile reveal"><div class="em">🌐</div><h3 data-i18n="feat_mp_t">Multiplayer online</h3><p data-i18n="feat_mp_b">Creează o masă, dă codul prietenilor și jucați în timp real.</p></div>
+      <div class="tile reveal"><div class="em">👥</div><h3 data-i18n="feat_friends_t">Prieteni & invitații</h3><p data-i18n="feat_friends_b">Listă de prieteni, cereri și invitații direct la masa ta.</p></div>
+      <div class="tile reveal"><div class="em">💬</div><h3 data-i18n="feat_chat_t">Chat & reacții</h3><p data-i18n="feat_chat_b">Mesaje în meci și reacții emoji animate.</p></div>
+      <div class="tile reveal"><div class="em">🎨</div><h3 data-i18n="feat_custom_t">Avatare & teme</h3><p data-i18n="feat_custom_b">Personalizează-ți avatarul și alege dintre mai multe teme.</p></div>
+      <div class="tile reveal"><div class="em">🌍</div><h3 data-i18n="feat_lang_t">Română & engleză</h3><p data-i18n="feat_lang_b">Joc complet tradus — comuți limba oricând.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tehnic">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="tech_kicker">Sub capotă</span>
+      <h2 data-i18n="tech_title">Detalii tehnice</h2>
+      <p data-i18n="tech_sub">Pentru curioși: cum e construit KLAIM.</p>
+    </div>
+
+    <div class="sec-head reveal" style="margin: 0 auto 18px;">
+      <span class="kicker" data-i18n="tech_stack_label">Tehnologii</span>
+    </div>
+    <div class="values reveal">
+      <div class="chip tech">React Native</div>
+      <div class="chip tech">Expo</div>
+      <div class="chip tech">TypeScript</div>
+      <div class="chip tech">Zustand</div>
+      <div class="chip tech">Supabase</div>
+      <div class="chip tech">Reanimated</div>
+      <div class="chip tech">i18next</div>
+    </div>
+
+    <div class="sec-head reveal" style="margin: 48px auto 26px;">
+      <span class="kicker" data-i18n="tech_how_label">Cum funcționează</span>
+    </div>
+    <div class="tiles">
+      <div class="tile reveal"><div class="em">⚙️</div><h3 data-i18n="tech1_t">Motor de joc determinist</h3><p data-i18n="tech1_b">Logica jocului e un motor pur în TypeScript: aceeași „sămânță” → exact aceeași partidă. Asta face posibil replay-ul și sincronizarea în multiplayer.</p></div>
+      <div class="tile reveal"><div class="em">🛡️</div><h3 data-i18n="tech2_t">Multiplayer validat pe server</h3><p data-i18n="tech2_b">Fiecare mutare e verificată pe server înainte să conteze, iar cărțile adversarilor rămân ascunse. Nimeni nu poate trișa din client.</p></div>
+      <div class="tile reveal"><div class="em">⚡</div><h3 data-i18n="tech3_t">Timp real & offline</h3><p data-i18n="tech3_b">Mesele se sincronizează live prin Supabase Realtime; modul cu boți rulează complet pe telefon, fără internet.</p></div>
+    </div>
+
+    <div class="tech-docs reveal">
+      <span class="docs-label" data-i18n="tech_docs_label">Documente:</span>
+      <a class="btn btn-ghost" href="https://alexdochitoiu.github.io/klaim-legal/privacy-policy.html" data-i18n="tech_doc_privacy">Politica de confidențialitate</a>
+      <a class="btn btn-ghost" href="https://alexdochitoiu.github.io/klaim-legal/data-deletion.html" data-i18n="tech_doc_deletion">Ștergerea datelor</a>
     </div>
   </div>
 </section>
@@ -402,15 +456,148 @@
     <div class="foot-grid">
       <div class="foot-brand">KLAIM</div>
       <div class="foot-links">
-        <a href="https://alexdochitoiu.github.io/klaim-legal/privacy-policy.html">Politica de confidențialitate</a>
-        <a href="https://alexdochitoiu.github.io/klaim-legal/data-deletion.html">Ștergerea datelor</a>
+        <a href="https://alexdochitoiu.github.io/klaim-legal/privacy-policy.html" data-i18n="foot_privacy">Politica de confidențialitate</a>
+        <a href="https://alexdochitoiu.github.io/klaim-legal/data-deletion.html" data-i18n="foot_deletion">Ștergerea datelor</a>
       </div>
     </div>
-    <p class="copy">© 2026 Dokee Studio · Joacă singur împotriva boților sau online cu prietenii. Aruncă, trage, iar când ești cel mai jos — strigă KLAIM!</p>
+    <p class="copy" data-i18n="foot_copy">© 2026 Dokee Studio · Joacă singur împotriva boților sau online cu prietenii. Aruncă, trage, iar când ești cel mai jos — strigă KLAIM!</p>
   </div>
 </footer>
 
 <script>
+  // ---------- i18n ----------
+  const T = {
+    ro: {
+      _title: `KLAIM — Jocul de cărți rapid`,
+      _desc: `KLAIM este un joc de cărți rapid pentru 2–6 jucători. Rămâi cu cât mai puține puncte în mână și strigă „KLAIM!” la momentul potrivit.`,
+      nav_how: `Cum se joacă`, nav_modes: `Moduri`, nav_features: `Funcții`, nav_tech: `Tehnic`,
+      hero_eyebrow: `Joc de cărți · 2–6 jucători`,
+      hero_tagline: `Jocul de cărți rapid`,
+      hero_sub: `Rămâi cu cât mai puține puncte în mână și strigă „KLAIM!” la momentul potrivit. Runde scurte, decizii rapide.`,
+      hero_cta1: `Vezi cum se joacă`, hero_cta2: `Moduri de joc`,
+      facts_players: `jucători`, facts_cards: `cărți (pachet standard)`, facts_round: `pe rundă`,
+      how_kicker: `Regulile pe scurt`, how_title: `Cum se joacă`, how_sub: `Trei pași simpli. Înveți într-o rundă.`,
+      step1_title: `Împărțirea`,
+      step1_body: `Fiecare primește <strong>4 sau 5 cărți</strong> (5 dacă sunteți 2–3, 4 dacă sunteți 4–6). Se întorc apoi <strong>cartea KLAIM</strong> (valoarea ei = 0 puncte runda asta) și <strong>cartea de START</strong>.`,
+      step2_title: `Tura ta`,
+      step2_body: `Mereu două acțiuni, în ordine: <strong>arunci</strong> o carte (sau 2–4 de aceeași valoare) și apoi <strong>tragi</strong> una nouă — de pe pachet sau din grămada de aruncări.`,
+      step3_title: `Strigă KLAIM`,
+      step3_body: `Când crezi că ai cea mai mică mână de la masă, <strong>strigi KLAIM</strong> la începutul turei tale. Ai dreptate? Zero puncte. Ai greșit? Penalizare.`,
+      values_kicker: `Valoarea cărților`,
+      val_ten: `2–10 = <b>valoarea lor</b>`, val_klaim: `carte KLAIM = <b>0</b>`,
+      klaim_kicker: `Momentul cheie`, klaim_title: `Strigătul „KLAIM!”`,
+      klaim_sub: `Poți striga doar la începutul turei tale, după ce toți au jucat o tură, și doar dacă ai <strong style="color:var(--ink)">10 puncte sau mai puține</strong>.`,
+      good_title: `Ai dreptate`,
+      good_body: `Ai cea mai mică mână de la masă → primești <strong>0 puncte</strong> în runda asta. 🎉`,
+      bad_title: `Te-ai înșelat`,
+      bad_body: `Altcineva avea mai puțin → primești o penalizare de <strong>+50 de puncte</strong>. 😬`,
+      win_title: `Cum se câștigă`,
+      win_body: `Punctele se adună rundă după rundă. Cine ajunge la <strong style="color:var(--ink)">100 de puncte e eliminat</strong>. Ultimul jucător rămas în joc câștigă partida.`,
+      modes_kicker: `Variază jocul`, modes_title: `Moduri de joc`, modes_sub: `Pe lângă modul Clasic, alege un ritm sau o regulă diferită.`,
+      mode_classic_t: `Clasic`, mode_classic_b: `Regulile complete, până la 100 de puncte. Ultimul rămas câștigă.`,
+      mode_quick_t: `Rundă rapidă`, mode_quick_b: `Joc scurt, decis într-o singură rundă.`,
+      mode_duel_t: `Duel 1v1`, mode_duel_b: `Doar voi doi, față în față, cu 10 cărți.`,
+      mode_speed_t: `Speed`, mode_speed_b: `Mâini mici, ture rapide — adrenalină pură.`,
+      mode_double_t: `Dublu KLAIM`, mode_double_b: `Două cărți speciale valorează 0 — mai multe șanse.`,
+      mode_jokers_t: `Jokeri`, mode_jokers_b: `Jokerii îți împart punctele din mână — strategie nouă.`,
+      feat_kicker: `Mai mult decât cărțile`, feat_title: `Ce găsești în aplicație`, feat_sub: `Joacă singur sau cu prietenii, cu tot ce ține jocul viu.`,
+      feat_bots_t: `Joc cu boți`, feat_bots_b: `Joacă oricând, chiar și offline, contra unor boți cu strategie.`,
+      feat_mp_t: `Multiplayer online`, feat_mp_b: `Creează o masă, dă codul prietenilor și jucați în timp real.`,
+      feat_friends_t: `Prieteni & invitații`, feat_friends_b: `Listă de prieteni, cereri și invitații direct la masa ta.`,
+      feat_chat_t: `Chat & reacții`, feat_chat_b: `Mesaje în meci și reacții emoji animate.`,
+      feat_custom_t: `Avatare & teme`, feat_custom_b: `Personalizează-ți avatarul și alege dintre mai multe teme.`,
+      feat_lang_t: `Română & engleză`, feat_lang_b: `Joc complet tradus — comuți limba oricând.`,
+      tech_kicker: `Sub capotă`, tech_title: `Detalii tehnice`, tech_sub: `Pentru curioși: cum e construit KLAIM.`,
+      tech_stack_label: `Tehnologii`, tech_how_label: `Cum funcționează`,
+      tech1_t: `Motor de joc determinist`,
+      tech1_b: `Logica jocului e un motor pur în TypeScript: aceeași „sămânță” → exact aceeași partidă. Asta face posibil replay-ul și sincronizarea în multiplayer.`,
+      tech2_t: `Multiplayer validat pe server`,
+      tech2_b: `Fiecare mutare e verificată pe server înainte să conteze, iar cărțile adversarilor rămân ascunse. Nimeni nu poate trișa din client.`,
+      tech3_t: `Timp real & offline`,
+      tech3_b: `Mesele se sincronizează live prin Supabase Realtime; modul cu boți rulează complet pe telefon, fără internet.`,
+      tech_docs_label: `Documente:`, tech_doc_privacy: `Politica de confidențialitate`, tech_doc_deletion: `Ștergerea datelor`,
+      foot_privacy: `Politica de confidențialitate`, foot_deletion: `Ștergerea datelor`,
+      foot_copy: `© 2026 Dokee Studio · Joacă singur împotriva boților sau online cu prietenii. Aruncă, trage, iar când ești cel mai jos — strigă KLAIM!`,
+    },
+    en: {
+      _title: `KLAIM — The fast card game`,
+      _desc: `KLAIM is a fast card game for 2–6 players. Keep as few points in your hand as possible and call “KLAIM!” at the right moment.`,
+      nav_how: `How to play`, nav_modes: `Modes`, nav_features: `Features`, nav_tech: `Tech`,
+      hero_eyebrow: `Card game · 2–6 players`,
+      hero_tagline: `The fast card game`,
+      hero_sub: `Keep as few points in your hand as possible and call “KLAIM!” at the right moment. Short rounds, fast decisions.`,
+      hero_cta1: `See how to play`, hero_cta2: `Game modes`,
+      facts_players: `players`, facts_cards: `cards (standard deck)`, facts_round: `per round`,
+      how_kicker: `The rules, in short`, how_title: `How to play`, how_sub: `Three simple steps. Learn in a single round.`,
+      step1_title: `The deal`,
+      step1_body: `Everyone gets <strong>4 or 5 cards</strong> (5 with 2–3 players, 4 with 4–6). Then the <strong>KLAIM card</strong> (its value scores 0 this round) and the <strong>START card</strong> are revealed.`,
+      step2_title: `Your turn`,
+      step2_body: `Always two actions, in order: <strong>discard</strong> one card (or 2–4 of the same value), then <strong>draw</strong> a new one — from the deck or the discard pile.`,
+      step3_title: `Call KLAIM`,
+      step3_body: `When you think you hold the lowest hand at the table, <strong>call KLAIM</strong> at the start of your turn. Right? Zero points. Wrong? A penalty.`,
+      values_kicker: `Card values`,
+      val_ten: `2–10 = <b>their value</b>`, val_klaim: `KLAIM card = <b>0</b>`,
+      klaim_kicker: `The key moment`, klaim_title: `Calling “KLAIM!”`,
+      klaim_sub: `You can only call at the start of your turn, after everyone has played one turn, and only if you have <strong style="color:var(--ink)">10 points or fewer</strong>.`,
+      good_title: `You're right`,
+      good_body: `You hold the lowest hand → you score <strong>0 points</strong> this round. 🎉`,
+      bad_title: `You're wrong`,
+      bad_body: `Someone had less → you take a <strong>+50 point</strong> penalty. 😬`,
+      win_title: `How you win`,
+      win_body: `Points add up round after round. Reach <strong style="color:var(--ink)">100 points and you're eliminated</strong>. The last player standing wins the match.`,
+      modes_kicker: `Mix it up`, modes_title: `Game modes`, modes_sub: `Beyond Classic, pick a different pace or rule.`,
+      mode_classic_t: `Classic`, mode_classic_b: `The full rules, up to 100 points. Last one standing wins.`,
+      mode_quick_t: `Quick round`, mode_quick_b: `A short game, decided in a single round.`,
+      mode_duel_t: `1v1 Duel`, mode_duel_b: `Just the two of you, head to head, with 10 cards.`,
+      mode_speed_t: `Speed`, mode_speed_b: `Small hands, fast turns — pure adrenaline.`,
+      mode_double_t: `Double KLAIM`, mode_double_b: `Two special cards score 0 — more chances.`,
+      mode_jokers_t: `Jokers`, mode_jokers_b: `Jokers divide the points in your hand — a new strategy.`,
+      feat_kicker: `More than the cards`, feat_title: `What's in the app`, feat_sub: `Play solo or with friends, with everything that keeps the game alive.`,
+      feat_bots_t: `Play vs bots`, feat_bots_b: `Play anytime, even offline, against bots with real strategy.`,
+      feat_mp_t: `Online multiplayer`, feat_mp_b: `Create a table, share the code, and play in real time.`,
+      feat_friends_t: `Friends & invites`, feat_friends_b: `Friends list, requests, and invites straight to your table.`,
+      feat_chat_t: `Chat & reactions`, feat_chat_b: `In-match messages and animated emoji reactions.`,
+      feat_custom_t: `Avatars & themes`, feat_custom_b: `Personalize your avatar and pick from several themes.`,
+      feat_lang_t: `Romanian & English`, feat_lang_b: `Fully translated — switch language anytime.`,
+      tech_kicker: `Under the hood`, tech_title: `Tech details`, tech_sub: `For the curious: how KLAIM is built.`,
+      tech_stack_label: `Built with`, tech_how_label: `How it works`,
+      tech1_t: `Deterministic game engine`,
+      tech1_b: `The game logic is a pure TypeScript engine: the same seed → the exact same game. That's what makes replays and multiplayer sync possible.`,
+      tech2_t: `Server-validated multiplayer`,
+      tech2_b: `Every move is validated on the server before it counts, and opponents' cards stay hidden. No one can cheat from the client.`,
+      tech3_t: `Real-time & offline`,
+      tech3_b: `Tables sync live through Supabase Realtime; the bot mode runs entirely on your phone, no internet needed.`,
+      tech_docs_label: `Documents:`, tech_doc_privacy: `Privacy policy`, tech_doc_deletion: `Data deletion`,
+      foot_privacy: `Privacy policy`, foot_deletion: `Data deletion`,
+      foot_copy: `© 2026 Dokee Studio · Play solo against bots or online with friends. Discard, draw, and when you're lowest — call KLAIM!`,
+    },
+  };
+
+  function applyLang(lang) {
+    const dict = T[lang] || T.ro;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k] != null) el.innerHTML = dict[k];
+    });
+    if (dict._title) document.title = dict._title;
+    const md = document.querySelector('meta[name="description"]');
+    if (md && dict._desc) md.setAttribute('content', dict._desc);
+    document.querySelectorAll('.lang-switch button').forEach((b) =>
+      b.classList.toggle('active', b.dataset.lang === lang)
+    );
+    try { localStorage.setItem('klaim_lang', lang); } catch (e) {}
+  }
+
+  let saved = null;
+  try { saved = localStorage.getItem('klaim_lang'); } catch (e) {}
+  const browserEn = (navigator.language || '').toLowerCase().startsWith('en');
+  applyLang(saved || (browserEn ? 'en' : 'ro'));
+  document.querySelectorAll('.lang-switch button').forEach((b) =>
+    b.addEventListener('click', () => applyLang(b.dataset.lang))
+  );
+
+  // ---------- reveal on scroll ----------
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
